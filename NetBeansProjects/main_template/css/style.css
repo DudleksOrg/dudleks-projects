@@ -526,7 +526,7 @@ p {
 .photolikes {
   float: right;
   line-height: 18px;
-  text-decoration: underline;
+  text-decoration: ;
 }
 /*----------- search --------------*/
 /* search-form */

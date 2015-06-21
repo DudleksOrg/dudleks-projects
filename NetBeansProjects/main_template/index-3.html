@@ -60,7 +60,7 @@
             <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Меню <span class="icon-bar"></span> </a>
             <div class="nav-collapse nav-collapse_  collapse">
                   <ul class="nav sf-menu">
-             <li class="active"><a href="index.html">О нас</a></li>
+             <li><a href="index.html">О нас</a></li>
                 <li class="sub-menu"><a href="index-1.html">Портфолио</a>
                       <ul>
                     <li><a href="#">Для двоих</a></li>
@@ -73,7 +73,7 @@
                     </li>
                 <li><a href="index-2.html">Портфолио</a></li>
                  <li><a href="index-4.html">Контакты</a></li>
-                <li><a href="index-3.html">Акции</a></li>
+                <li class="active"><a href="index-3.html">Акции</a></li>
               </ul>
                 </div>
           </div>
@@ -124,7 +124,7 @@
             <li><a href="#">June 2012</a></li>
           </ul>
             <ul class="list extra2">
-            <li><a href="#">May 2012</a></li>
+                <li><a href="#">May 2012</a></li>
             <li><a href="#">April 2012</a></li>
             <li><a href="#">March 2012</a></li>
             <li><a href="#">February 2012</a></li>
@@ -170,35 +170,37 @@
     var time_tag = document.createElement("time");
     var div_autorname_tag = document.createElement("div");
     var a_autorlink_tag = document.createElement("a");
-    var a_photolike_tag = document.createElement("a");
+    var p_photolike_tag = document.createElement("p");
     var div_clear_tag = document.createElement("div");
     var img_tag = document.createElement("img");
     var p_tag = document.createElement("p");   
    
      //li_tag.setAttribute("class","box");    
-     console.log(extractSummary(value.text));
-     h3_tag.innerHTML = extractSummary(value.text);
+     console.log(extractChapter(value.text));
+     h3_tag.innerHTML = extractChapter(value.text);
      time_tag.setAttribute("datetime","2012-11-09");
      time_tag.setAttribute("class","date-1");
      time_tag.innerHTML = timeConverter(value.created);
      div_autorname_tag.setAttribute("class","name-author");
-     div_autorname_tag.innerHTML = "by ";
+     div_autorname_tag.innerHTML = 'Опубликовано ';
      a_autorlink_tag.setAttribute("href", "https://vk.com/fotostudiookna");
-     a_autorlink_tag.innerHTML = "Admin";
-     a_photolike_tag.setAttribute("class", "photolikes");
-     a_photolike_tag.setAttribute("src", value.likes.count);
+     a_autorlink_tag.innerHTML = "fotostudiookna";
+     p_photolike_tag.setAttribute("class", "photolikes");
+     p_photolike_tag.setAttribute("class", "photolikes");
+     p_photolike_tag.innerHTML  = 'Лайков: ' + value.likes.count;
      div_clear_tag.setAttribute("class","clear");
-     img_tag.setAttribute("src", value.sizes[5].src);
+     img_tag.setAttribute("style", "padding-top: 10px;  position: relative");
+     img_tag.setAttribute("src", value.sizes[2].src);
      img_tag.setAttribute("text-align", "left");
      img_tag.setAttribute("alt","");
      p_tag.innerHTML = '&nbsp; &nbsp; &nbsp;' + value.text;
-   
+    li_tag.setAttribute("style", "text-allign: left");
   
 li_tag.appendChild(h3_tag);
    li_tag.appendChild(time_tag);
    li_tag.appendChild(div_autorname_tag);
    div_autorname_tag.appendChild(a_autorlink_tag);
-   li_tag.appendChild(a_photolike_tag);
+   li_tag.appendChild(p_photolike_tag);
    li_tag.appendChild(img_tag);
    li_tag.appendChild(p_tag);
            ul_tag.appendChild(li_tag);
@@ -208,19 +210,22 @@ li_tag.appendChild(h3_tag);
     }
 }); 
 
-function timeConverter(timeStamp_value){
-var theDate = new Date(timeStamp_value * 1000);
-dateString = theDate.toGMTString();
-return dateString;
+    function timeConverter(timeStamp_value){
+        var theDate = new Date(timeStamp_value * 1000);
+        var theMonth = theDate.getMonth();
+            if (theMonth < 10)
+                theMonth = '0'+ theMonth;
+        return dateString = theDate.getDate()+'.' + theMonth+'.' +  theDate.getFullYear();
+   
 }
 
-function extractSummary(iCalContent) {
-  var str =  ' *"([^"]+?)"';
-  alert(str);
-  var arr = iCalContent.match(str);
-  alert(arr[1]);
-  return arr[1]; 
-}
+    
+  function extractChapter(chapter) {
+      return result = chapter.substring(chapter.lastIndexOf('"')+1,chapter.lastIndexOf('"')+ chapter);
+
+    }
+    
+   
 </script>
 </body>
 </html>
