@@ -176,7 +176,6 @@
     var p_tag = document.createElement("p");   
    
      //li_tag.setAttribute("class","box");    
-     console.log(extractChapter(value.text));
      h3_tag.innerHTML = extractChapter(value.text);
      time_tag.setAttribute("datetime","2012-11-09");
      time_tag.setAttribute("class","date-1");
@@ -189,8 +188,8 @@
      p_photolike_tag.setAttribute("class", "photolikes");
      p_photolike_tag.innerHTML  = 'Лайков: ' + value.likes.count;
      div_clear_tag.setAttribute("class","clear");
-     img_tag.setAttribute("style", "padding-top: 10px;  position: relative");
-     img_tag.setAttribute("src", value.sizes[2].src);
+     img_tag.setAttribute("src", checkSize(value));
+     img_tag.setAttribute("style", "padding-top: 10px;  position: relative;  float: left");
      img_tag.setAttribute("text-align", "left");
      img_tag.setAttribute("alt","");
      p_tag.innerHTML = '&nbsp; &nbsp; &nbsp;' + value.text;
@@ -209,23 +208,31 @@ li_tag.appendChild(h3_tag);
         });
     }
 }); 
-
     function timeConverter(timeStamp_value){
         var theDate = new Date(timeStamp_value * 1000);
         var theMonth = theDate.getMonth();
             if (theMonth < 10)
                 theMonth = '0'+ theMonth;
-        return dateString = theDate.getDate()+'.' + theMonth+'.' +  theDate.getFullYear();
-   
+        return dateString = theDate.getDate()+'.' + theMonth+'.' +  theDate.getFullYear();  
 }
-
-    
   function extractChapter(chapter) {
-      return result = chapter.substring(chapter.lastIndexOf('"')+1,chapter.lastIndexOf('"')+ chapter);
-
+    var result = chapter.substring(chapter.lastIndexOf('"')+1,chapter.lastIndexOf('"')+ chapter);
+      if(result===""){
+        return "Заголовок акции"        
+      }else{
+        return result;
+      }
     }
     
-   
+  function checkSize(value) {
+      var img_height = value.sizes[0].height;
+      var img_width = value.sizes[0].width;
+      if(img_width > img_height){
+          return value.sizes[2].src;
+      }else{
+          return value.sizes[5].src;
+      }
+    } 
 </script>
 </body>
 </html>
